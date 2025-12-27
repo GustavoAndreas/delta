@@ -16,6 +16,7 @@ function useClickOutside(ref, onOutside) {
     return () => document.removeEventListener("mousedown", handle);
   }, [ref, onOutside]);
 }
+
 function Navbar() {
   const [open, setOpen] = useState(false); // dropdown serviços
   const [mobileOpen, setMobileOpen] = useState(false); // menu mobile
@@ -44,39 +45,65 @@ function Navbar() {
 
         {/* Desktop nav */}
         <nav className="nav nav--desktop">
-          <button className="nav__btn" onClick={() => go("inicio")}>Início</button>
-          <button className="nav__btn" onClick={() => go("sobre")}>Sobre</button>
+          <button className="nav__btn" onClick={() => go("inicio")}>
+            Início
+          </button>
+          <button className="nav__btn" onClick={() => go("sobre")}>
+            Sobre
+          </button>
 
           <div className="dropdown" ref={dropdownRef}>
-            <button className="nav__btn" onClick={() => setOpen(v => !v)}>
-              Serviços ⌄
-            </button>
+            <button
+  className="nav__btn nav__btn--dropdown"
+  onClick={() => setOpen((v) => !v)}
+>
+  <span>Serviços</span>
+  <span className="nav__caret">▾</span>
+
+</button>
+
             {open && (
               <div className="dropdown__menu" role="menu">
-                <button className="dropdown__item" onClick={() => go("servicos-instrumentacao")}>
+                <button
+                  className="dropdown__item"
+                  onClick={() => go("servicos-instrumentacao")}
+                >
                   Instrumentos de medida / teste / controle
                 </button>
-                <button className="dropdown__item" onClick={() => go("servicos-maquinas")}>
+                <button
+                  className="dropdown__item"
+                  onClick={() => go("servicos-maquinas")}
+                >
                   Máquinas e equipamentos industriais
                 </button>
-                <button className="dropdown__item" onClick={() => go("servicos-instalacao")}>
+                <button
+                  className="dropdown__item"
+                  onClick={() => go("servicos-instalacao")}
+                >
                   Instalação de máquinas e equipamentos
                 </button>
-                <button className="dropdown__item" onClick={() => go("servicos-engenharia")}>
+                <button
+                  className="dropdown__item"
+                  onClick={() => go("servicos-engenharia")}
+                >
                   Serviços de engenharia
                 </button>
               </div>
             )}
           </div>
 
-          <button className="nav__btn" onClick={() => go("contato")}>Contato</button>
-          <button className="nav__btn nav__cta" onClick={() => go("contato")}>Orçamento</button>
+          <button className="nav__btn" onClick={() => go("contato")}>
+            Contato
+          </button>
+          <button className="nav__btn nav__cta" onClick={() => go("contato")}>
+            Orçamento
+          </button>
         </nav>
 
         {/* Mobile toggle */}
         <button
           className="nav__toggle"
-          onClick={() => setMobileOpen(v => !v)}
+          onClick={() => setMobileOpen((v) => !v)}
           aria-expanded={mobileOpen}
           aria-label="Abrir menu"
         >
@@ -89,29 +116,49 @@ function Navbar() {
         <div className="mobilePanel">
           <div className="container nav--mobile">
             <div className="nav__row">
-              <button className="nav__btn" onClick={() => go("inicio")}>Início</button>
-              <button className="nav__btn" onClick={() => go("sobre")}>Sobre</button>
-              <button className="nav__btn" onClick={() => go("contato")}>Contato</button>
-              <button className="nav__btn nav__cta" onClick={() => go("contato")}>Orçamento</button>
+              <button className="nav__btn" onClick={() => go("inicio")}>
+                Início
+              </button>
+              <button className="nav__btn" onClick={() => go("sobre")}>
+                Sobre
+              </button>
+              <button className="nav__btn" onClick={() => go("contato")}>
+                Contato
+              </button>
+              <button className="nav__btn nav__cta" onClick={() => go("contato")}>
+                Orçamento
+              </button>
             </div>
 
             <div className="dropdown">
-              <button className="nav__btn" onClick={() => setOpen(v => !v)}>
+              <button className="nav__btn" onClick={() => setOpen((v) => !v)}>
                 Serviços ⌄
               </button>
 
               {open && (
                 <div className="dropdown__menu" role="menu">
-                  <button className="dropdown__item" onClick={() => go("servicos-instrumentacao")}>
+                  <button
+                    className="dropdown__item"
+                    onClick={() => go("servicos-instrumentacao")}
+                  >
                     Instrumentos de medida / teste / controle
                   </button>
-                  <button className="dropdown__item" onClick={() => go("servicos-maquinas")}>
+                  <button
+                    className="dropdown__item"
+                    onClick={() => go("servicos-maquinas")}
+                  >
                     Máquinas e equipamentos industriais
                   </button>
-                  <button className="dropdown__item" onClick={() => go("servicos-instalacao")}>
+                  <button
+                    className="dropdown__item"
+                    onClick={() => go("servicos-instalacao")}
+                  >
                     Instalação de máquinas e equipamentos
                   </button>
-                  <button className="dropdown__item" onClick={() => go("servicos-engenharia")}>
+                  <button
+                    className="dropdown__item"
+                    onClick={() => go("servicos-engenharia")}
+                  >
                     Serviços de engenharia
                   </button>
                 </div>
@@ -123,7 +170,6 @@ function Navbar() {
     </header>
   );
 }
-
 
 function Section({ id, eyebrow, title, subtitle, children }) {
   return (
@@ -139,52 +185,93 @@ function Section({ id, eyebrow, title, subtitle, children }) {
 }
 
 export default function App() {
+
+  const [openService, setOpenService] = useState(null);
+
+  const services = [
+    {
+      id: "servicos-instrumentacao",
+      title: "Instrumentos de medida, teste e controle",
+      short:
+        "Manutenção e reparo de instrumentos de medição industrial, com foco em precisão e continuidade do processo.",
+      long:
+        "Atuação técnica em instrumentos de medida, teste e controle, incluindo diagnóstico, manutenção corretiva e preventiva, verificação de confiabilidade e suporte para manter o processo produtivo estável e seguro.",
+      image: "/images/instrumentacao.jpg",
+      cta: "Solicitar orçamento",
+    },
+    {
+      id: "servicos-maquinas",
+      title: "Máquinas e equipamentos industriais",
+      short:
+        "Identificação de falhas, reparo e recuperação da capacidade operacional de máquinas industriais.",
+      long:
+        "Manutenção e reparo de máquinas e equipamentos industriais com foco em redução de paradas, identificação de causa raiz e restauração de performance. Suporte técnico para garantir operação contínua e previsível.",
+      image: "/images/maquinas.jpg",
+      cta: "Solicitar orçamento",
+    },
+    {
+      id: "servicos-instalacao",
+      title: "Instalação de máquinas e equipamentos",
+      short:
+        "Apoio técnico em instalação, adequações e acompanhamento de comissionamento.",
+      long:
+        "Apoio especializado na instalação de máquinas e equipamentos industriais, adequações de infraestrutura, orientação técnica e acompanhamento de comissionamento para garantir que o sistema entre em operação corretamente.",
+      image: "/images/instalacao.jpg",
+      cta: "Solicitar orçamento",
+    },
+    {
+      id: "servicos-engenharia",
+      title: "Serviços de engenharia",
+      short:
+        "Consultoria e suporte técnico com análise, documentação e acompanhamento conforme escopo.",
+      long:
+        "Serviços de engenharia sob demanda: análise técnica, suporte a decisões, documentação, acompanhamento e alinhamento de escopo com foco em confiabilidade, segurança e eficiência operacional.",
+      image: "/images/engenharia.jpg",
+      cta: "Solicitar orçamento",
+    },
+  ];
+
+  function toggleService(id) {
+    setOpenService((cur) => (cur === id ? null : id));
+  }
+
   return (
     <div className="page">
       <Navbar />
 
-      {/* HERO */}
-      <section id="inicio" className="hero section">
-        <div className="container">
-          <div className="hero__card">
-            <div className="hero__glow1" />
-            <div className="hero__glow2" />
+      <section id="inicio" className="heroVideo">
+        {/* Vídeo */}
+        <div className="heroVideo__media">
+          <video autoPlay muted loop playsInline preload="metadata">
+            <source src="/videos/video.mp4" type="video/mp4" />
+          </video>
+        </div>
 
-            <div className="hero__kicker">Sorocaba/SP • Desde 14/07/2016</div>
+        {/* Overlay azul */}
+        <div className="heroVideo__overlay" />
 
-            <h1 className="hero__title">
-              Manutenção e reparo de{" "}
-              <span>instrumentos de medida, teste e controle</span>
-            </h1>
+        {/* Conteúdo */}
+        <div className="heroVideo__content">
+          <div className="heroVideo__kicker">Sorocaba / SP • Desde 2016</div>
 
-            <p className="hero__text">
-              Atuação técnica em instrumentação e equipamentos industriais, com instalação
-              e serviços de engenharia conforme escopo.
-            </p>
+          <h1 className="heroVideo__title">
+            Engenharia aplicada à
+            <br />
+            instrumentação industrial
+          </h1>
 
-            <div className="hero__actions">
-              <button className="btn btn--primary" onClick={() => scrollToId("contato")}>
-                Solicitar orçamento
-              </button>
-              <button className="btn btn--ghost" onClick={() => scrollToId("servicos")}>
-                Ver serviços
-              </button>
-            </div>
+          <p className="heroVideo__text">
+            Manutenção, reparo e instalação de instrumentos de medida, teste e controle, com foco
+            em confiabilidade e continuidade operacional.
+          </p>
 
-            <div className="hero__chips">
-              <div className="chip">
-                <div className="chip__label">CNAE Principal</div>
-                <div className="chip__value">33.12-1/02</div>
-              </div>
-              <div className="chip">
-                <div className="chip__label">Foco</div>
-                <div className="chip__value">Instrumentação & Indústria</div>
-              </div>
-              <div className="chip">
-                <div className="chip__label">Atendimento</div>
-                <div className="chip__value">Sob demanda / contrato</div>
-              </div>
-            </div>
+          <div className="heroVideo__actions">
+            <button className="btn btn--primary" onClick={() => scrollToId("contato")}>
+              Solicitar orçamento
+            </button>
+            <button className="btn btn--ghost" onClick={() => scrollToId("servicos")}>
+              Ver serviços
+            </button>
           </div>
         </div>
       </section>
@@ -194,7 +281,7 @@ export default function App() {
         id="sobre"
         eyebrow="Quem somos"
         title="Engenharia aplicada com foco em confiabilidade"
-        subtitle="Delta V Engenharia Ltda — CNPJ 25.210.791/0001-05 — Sorocaba/SP."
+        subtitle="Delta V Engenharia Ltda — Sorocaba-SP."
       >
         <div className="grid grid--3">
           <div className="card">
@@ -218,140 +305,218 @@ export default function App() {
         </div>
       </Section>
 
-      {/* SERVIÇOS */}
+      {/* SERVIÇOS (novo layout estilo card com expansão) */}
       <Section
-  id="servicos"
-  eyebrow="O que fazemos"
-  title="Serviços"
-  subtitle="Atuação técnica em ambientes industriais, com foco em confiabilidade e precisão."
->
-  {/* Instrumentação */}
-  <div id="servicos-instrumentacao" className="service">
-    <div className="service__image">
-      <img src="/images/instrumentacao.jpg" alt="Instrumentação industrial" />
-    </div>
-    <div className="service__content">
-      <h3 className="service__title">
-        Instrumentos de medida, teste e controle
-      </h3>
-      <p className="service__text">
-        Manutenção e reparo de instrumentos de medição industrial, com foco em precisão,
-        confiabilidade e continuidade do processo produtivo.
-      </p>
-      <div className="service__actions">
-        <button className="btn btn--primary">Solicitar orçamento</button>
-      </div>
-    </div>
-  </div>
-
-  <div style={{ height: 56 }} />
-
-  {/* Máquinas */}
-  <div id="servicos-maquinas" className="service service--reverse">
-    <div className="service__content">
-      <h3 className="service__title">
-        Máquinas e equipamentos industriais
-      </h3>
-      <p className="service__text">
-        Manutenção e reparo de máquinas industriais, atuando na identificação de falhas
-        e recuperação da capacidade operacional.
-      </p>
-      <div className="service__actions">
-        <button className="btn btn--primary">Solicitar orçamento</button>
-      </div>
-    </div>
-    <div className="service__image">
-      <img src="/images/maquinas.jpg" alt="Máquinas industriais" />
-    </div>
-  </div>
-
-  <div style={{ height: 56 }} />
-
-  {/* Instalação */}
-  <div id="servicos-instalacao" className="service">
-    <div className="service__image">
-      <img src="/images/instalacao.jpg" alt="Instalação industrial" />
-    </div>
-    <div className="service__content">
-      <h3 className="service__title">
-        Instalação de máquinas e equipamentos
-      </h3>
-      <p className="service__text">
-        Apoio técnico na instalação de equipamentos industriais, adequações
-        e acompanhamento de comissionamento.
-      </p>
-      <div className="service__actions">
-        <button className="btn btn--primary">Solicitar orçamento</button>
-      </div>
-    </div>
-  </div>
-
-  <div style={{ height: 56 }} />
-
-  {/* Engenharia */}
-  <div id="servicos-engenharia" className="service service--reverse">
-    <div className="service__content">
-      <h3 className="service__title">
-        Serviços de engenharia
-      </h3>
-      <p className="service__text">
-        Consultoria e suporte técnico em engenharia, com análise, documentação
-        e acompanhamento conforme escopo do cliente.
-      </p>
-      <div className="service__actions">
-        <button className="btn btn--primary">Solicitar orçamento</button>
-      </div>
-    </div>
-    <div className="service__image">
-      <img src="/images/engenharia.jpg" alt="Serviços de engenharia" />
-    </div>
-  </div>
-</Section>
-
-
-      {/* CONTATO */}
-      <Section
-        id="contato"
-        eyebrow="Fale com a Delta V"
-        title="Contato"
-        subtitle="Troque pelos dados reais (telefone/email) e depois colocamos o mapa."
+        id="servicos"
+        eyebrow="O que fazemos"
+        title="Serviços"
+        subtitle="Clique em um serviço para ver mais detalhes e chamar a equipe."
       >
-        <div className="contact">
-          <div className="card">
-            <h3 className="card__title">Informações</h3>
-            <p className="card__text">
-              📍 Rua Maria Carmen Rodrigues Saker, 90 — Jardim do Paço, Sorocaba — SP
-              <br />
-              🕒 Atendimento: (definir)
-              <br />
-              ✉️ Email: (definir)
-              <br />
-              📞 WhatsApp: (definir)
-            </p>
+        <div className="servicesGrid">
+          {services.map((s) => {
+            const isOpen = openService === s.id;
 
-            <div style={{ marginTop: 16, display: "flex", gap: 10, flexWrap: "wrap" }}>
-              <a className="btn btn--primary" href="#">
-                Chamar no WhatsApp
-              </a>
-              <button className="btn btn--ghost" onClick={() => scrollToId("inicio")}>
-                Voltar ao topo
-              </button>
-            </div>
-          </div>
+            return (
+              <article
+                key={s.id}
+                id={s.id}
+                className={`serviceCard ${isOpen ? "serviceCard--open" : ""}`}
+              >
+                <button
+                  type="button"
+                  className="serviceCard__hit"
+                  onClick={() => toggleService(s.id)}
+                  aria-expanded={isOpen}
+                >
+                  <div className="serviceCard__media">
+                    <img src={s.image} alt={s.title} loading="lazy" />
+                    <div className="serviceCard__mediaFade" />
+                  </div>
 
-          <div className="card">
-            <h3 className="card__title">Mapa</h3>
-            <p className="card__text">Placeholder — depois a gente coloca o embed.</p>
-            <div className="map" />
-          </div>
+                  <div className="serviceCard__body">
+                    <h3 className="serviceCard__title">{s.title}</h3>
+                    <p className="serviceCard__text">{s.short}</p>
+
+                    <div className="serviceCard__hint">
+                      {isOpen ? "Fechar detalhes" : "Ver detalhes"}
+                      <span className={`serviceCard__caret ${isOpen ? "isOpen" : ""}`}>▾</span>
+                    </div>
+                  </div>
+                </button>
+
+                {/* Área expandida */}
+                <div className={`serviceCard__expand ${isOpen ? "isOpen" : ""}`}>
+                  <div className="serviceCard__expandInner">
+                    <p className="serviceCard__long">{s.long}</p>
+
+                    <div className="serviceCard__ctaRow">
+                      <button
+                        className="btn btn--primary"
+                        onClick={() => scrollToId("contato")}
+                      >
+                        {s.cta}
+                      </button>
+
+                      <button
+                        className="btn"
+                        onClick={() => scrollToId("contato")}
+                      >
+                        Falar com a equipe
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </article>
+            );
+          })}
         </div>
       </Section>
 
-      <footer className="footer">
-        <div className="container">
-          © {new Date().getFullYear()} Delta V Engenharia Ltda • CNPJ 25.210.791/0001-05
+      {/* FIM DO SITE: CONTATO + CARD COM MAPA + FOOTER (SEM FORM) */}
+      <section className="endBlock" id="contato">
+        <div className="endBlock__hero">
+          <div className="endBlock__heroInner">
+            <h2 className="endBlock__heroTitle">Fale com a Delta V</h2>
+            <p className="endBlock__heroSubtitle">
+              Orçamentos e atendimento técnico para instrumentação, instalação e serviços de engenharia.
+            </p>
+          </div>
         </div>
-      </footer>
+
+        <div className="contactCard">
+          <div className="contactCard__box contactCard__box--map">
+            {/* ESQUERDA: infos */}
+            <aside className="contactLeft">
+              <div className="contactBrand">
+                <div className="contactBrand__badge">ΔV</div>
+                <div>
+                  <div className="contactBrand__title">Delta V Engenharia</div>
+                  <div className="contactBrand__sub">
+                    Instrumentação • Instalação • Engenharia
+                  </div>
+                </div>
+              </div>
+
+              <div className="infoList">
+                <div className="infoItem">
+                  <div className="infoIcon">📍</div>
+                  <div>
+                    <p className="infoLabel">Endereço</p>
+                    <div className="infoValue">
+                      Rua Maria Carmen Rodrigues Saker, 90<br />
+                      Jardim do Paço — Sorocaba/SP
+                    </div>
+                  </div>
+                </div>
+
+                <div className="infoItem">
+                  <div className="infoIcon">✉️</div>
+                  <div>
+                    <p className="infoLabel">Email</p>
+                    <div className="infoValue">luizf.vieira@deltavengenharia.com.br</div>
+                  </div>
+                </div>
+
+                <div className="infoItem">
+                  <div className="infoIcon">☎️</div>
+                  <div>
+                    <p className="infoLabel">Telefone</p>
+                    <div className="infoValue">15 3228 5696</div>
+                  </div>
+                </div>
+
+                <div className="infoItem">
+                  <div className="infoIcon">💬</div>
+                  <div>
+                    <p className="infoLabel">WhatsApp</p>
+                    <div className="infoValue">15 99147 8419</div>
+                  </div>
+                </div>
+              </div>
+            </aside>
+
+            {/* DIREITA: MAPA grande */}
+            <div className="contactMap">
+              <iframe
+                title="Mapa - Delta V Engenharia"
+                className="contactMap__frame"
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                src="https://www.google.com/maps?q=Rua%20Maria%20Carmen%20Rodrigues%20Saker%2090%20Sorocaba%20SP&output=embed"
+              />
+            </div>
+          </div>
+        </div>
+
+        {/* FOOTER */}
+        <footer className="footerMega">
+          <div className="footerMega__inner">
+            <div>
+              <h4>Delta V Engenharia</h4>
+              <p>
+                Manutenção e reparo de instrumentos de medida, teste e controle. Instalação de máquinas
+                e serviços de engenharia.
+              </p>
+            </div>
+
+            <div>
+              <h4>Empresa</h4>
+              <div className="footerLinks">
+                <a href="#sobre">Sobre</a>
+                <a href="#servicos">Serviços</a>
+                <a href="#contato">Contato</a>
+              </div>
+            </div>
+
+            <div>
+              <h4>Suporte</h4>
+              <div className="footerLinks">
+                <a href="#contato">Orçamento</a>
+                <a href="#contato">Atendimento</a>
+              </div>
+            </div>
+
+            <div>
+              <h4>Atendimento</h4>
+              <p>WhatsApp, telefone e email para suporte técnico e orçamentos.</p>
+              <div style={{ marginTop: 10, display: "flex", gap: 10, flexWrap: "wrap" }}>
+                <a
+                  className="btn btn--primary"
+                  href="https://wa.me/5515991478419"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  WhatsApp
+                </a>
+                <a className="btn" href="tel:+551532285696">
+                  Ligar
+                </a>
+                <a className="btn" href="mailto:luizf.vieira@deltavengenharia.com.br">
+                  Email
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <div className="footerBottom">
+            <div>© {new Date().getFullYear()} Delta V Engenharia Ltda</div>
+            <div>CNPJ 25.210.791/0001-05</div>
+          </div>
+        </footer>
+      </section>
+
+      {/* WhatsApp flutuante (sempre visível) */}
+      <a
+  className="waFloat"
+  href="https://wa.me/5515991478419"
+  target="_blank"
+  rel="noreferrer"
+  aria-label="Chamar no WhatsApp"
+  title="Chamar no WhatsApp"
+>
+  <img className="waFloat__icon" src="/icons/whatsapp.svg" alt="" />
+</a>
+
     </div>
   );
 }
