@@ -1,4 +1,13 @@
 import "./App.css";
+import instrumentosMedidaTesteControle from "./assets/services/instrumentos-medida-teste-controle.jpg";
+import maquinasIndustriais from "./assets/services/maquinas-industriais.jpg";
+import instalacaoIndustrial from "./assets/services/instalacao-industrial.jpg";
+import servicosDeEngenharia from "./assets/services/servicos-de-engenharia.jpg";
+import treinamentoDesenvolvimento from "./assets/services/treinamento-desenvolvimento-profissional.jpg";
+import addressIcon from "./assets/icons/address.svg";
+import emailIcon from "./assets/icons/email.svg";
+import phoneIcon from "./assets/icons/phone.svg";
+import whatsappIcon from "./assets/icons/whatsapp.svg";
 import { useEffect, useRef, useState } from "react";
 
 function scrollToId(id) {
@@ -185,9 +194,6 @@ function Section({ id, eyebrow, title, subtitle, children }) {
 }
 
 export default function App() {
-
-  const [openService, setOpenService] = useState(null);
-
   const services = [
     {
       id: "servicos-instrumentacao",
@@ -196,7 +202,7 @@ export default function App() {
         "Manutenção e reparo de instrumentos de medição industrial, com foco em precisão e continuidade do processo.",
       long:
         "Atuação técnica em instrumentos de medida, teste e controle, incluindo diagnóstico, manutenção corretiva e preventiva, verificação de confiabilidade e suporte para manter o processo produtivo estável e seguro.",
-      image: "/images/instrumentacao.jpg",
+      image: instrumentosMedidaTesteControle,
       cta: "Solicitar orçamento",
     },
     {
@@ -206,7 +212,7 @@ export default function App() {
         "Identificação de falhas, reparo e recuperação da capacidade operacional de máquinas industriais.",
       long:
         "Manutenção e reparo de máquinas e equipamentos industriais com foco em redução de paradas, identificação de causa raiz e restauração de performance. Suporte técnico para garantir operação contínua e previsível.",
-      image: "/images/maquinas.jpg",
+      image: maquinasIndustriais,
       cta: "Solicitar orçamento",
     },
     {
@@ -216,7 +222,7 @@ export default function App() {
         "Apoio técnico em instalação, adequações e acompanhamento de comissionamento.",
       long:
         "Apoio especializado na instalação de máquinas e equipamentos industriais, adequações de infraestrutura, orientação técnica e acompanhamento de comissionamento para garantir que o sistema entre em operação corretamente.",
-      image: "/images/instalacao.jpg",
+      image: instalacaoIndustrial,
       cta: "Solicitar orçamento",
     },
     {
@@ -226,14 +232,19 @@ export default function App() {
         "Consultoria e suporte técnico com análise, documentação e acompanhamento conforme escopo.",
       long:
         "Serviços de engenharia sob demanda: análise técnica, suporte a decisões, documentação, acompanhamento e alinhamento de escopo com foco em confiabilidade, segurança e eficiência operacional.",
-      image: "/images/engenharia.jpg",
+      image: servicosDeEngenharia,
+      cta: "Solicitar orçamento",
+    },    {
+      id: "servicos-treinamento",
+      title: "Treinamento em desenvolvimento profissional e gerencial",
+      short:
+        "Cursos e treinamentos para equipes técnicas e lideranças, com foco em desenvolvimento profissional e gerencial.",
+      long:
+        "Programas sob medida para equipes operacionais e gestão, com conteúdo aplicado à rotina industrial, boas práticas, segurança e melhoria contínua.",
+      image: treinamentoDesenvolvimento,
       cta: "Solicitar orçamento",
     },
   ];
-
-  function toggleService(id) {
-    setOpenService((cur) => (cur === id ? null : id));
-  }
 
   return (
     <div className="page">
@@ -313,62 +324,49 @@ export default function App() {
         subtitle="Clique em um serviço para ver mais detalhes e chamar a equipe."
       >
         <div className="servicesGrid">
-          {services.map((s) => {
-            const isOpen = openService === s.id;
+          {services.map((s) => (
+            <article key={s.id} id={s.id} className="serviceCard">
+              <div className="serviceCard__viewport">
+                <div className="serviceCard__track">
+                  {/* FACE 1 (normal) */}
+                  <div className="serviceCard__face serviceCard__face--front">
+                    <div className="serviceCard__media">
+                      <img src={s.image} alt={s.title} loading="lazy" />
+                      <div className="serviceCard__mediaFade" />
+                    </div>
 
-            return (
-              <article
-                key={s.id}
-                id={s.id}
-                className={`serviceCard ${isOpen ? "serviceCard--open" : ""}`}
-              >
-                <button
-                  type="button"
-                  className="serviceCard__hit"
-                  onClick={() => toggleService(s.id)}
-                  aria-expanded={isOpen}
-                >
-                  <div className="serviceCard__media">
-                    <img src={s.image} alt={s.title} loading="lazy" />
-                    <div className="serviceCard__mediaFade" />
-                  </div>
-
-                  <div className="serviceCard__body">
-                    <h3 className="serviceCard__title">{s.title}</h3>
-                    <p className="serviceCard__text">{s.short}</p>
-
-                    <div className="serviceCard__hint">
-                      {isOpen ? "Fechar detalhes" : "Ver detalhes"}
-                      <span className={`serviceCard__caret ${isOpen ? "isOpen" : ""}`}>▾</span>
+                    <div className="serviceCard__body">
+                      <h3 className="serviceCard__title">{s.title}</h3>
+                      <p className="serviceCard__text">{s.short}</p>
+                      <button type="button" className="btn serviceCard__btn">
+                        Ver serviço
+                      </button>
                     </div>
                   </div>
-                </button>
 
-                {/* Área expandida */}
-                <div className={`serviceCard__expand ${isOpen ? "isOpen" : ""}`}>
-                  <div className="serviceCard__expandInner">
-                    <p className="serviceCard__long">{s.long}</p>
+                  {/* FACE 2 (detalhes) */}
+                  <div className="serviceCard__face serviceCard__face--details">
+                    <div className="serviceCard__media serviceCard__media--details">
+                      <img src={s.image} alt="" loading="lazy" />
+                      <div className="serviceCard__detailsOverlay" />
+                    </div>
 
-                    <div className="serviceCard__ctaRow">
-                      <button
-                        className="btn btn--primary"
-                        onClick={() => scrollToId("contato")}
-                      >
-                        {s.cta}
-                      </button>
+                    <div className="serviceCard__body serviceCard__body--details">
+                      <h3 className="serviceCard__title">{s.title}</h3>
+                      <p className="serviceCard__long">{s.long}</p>
 
-                      <button
-                        className="btn"
-                        onClick={() => scrollToId("contato")}
-                      >
-                        Falar com a equipe
-                      </button>
+                      <div className="serviceCard__ctaRow">
+                        <button className="btn btn--primary" onClick={() => scrollToId("contato")}>
+                          Solicitar orçamento
+                        </button>
+                      </div>
+
                     </div>
                   </div>
                 </div>
-              </article>
-            );
-          })}
+              </div>
+            </article>
+          ))}
         </div>
       </Section>
 
@@ -399,7 +397,9 @@ export default function App() {
 
               <div className="infoList">
                 <div className="infoItem">
-                  <div className="infoIcon">📍</div>
+                  <div className="infoIcon">
+                    <img className="infoIcon__img" src={addressIcon} alt="" aria-hidden="true" />
+                  </div>
                   <div>
                     <p className="infoLabel">Endereço</p>
                     <div className="infoValue">
@@ -410,7 +410,9 @@ export default function App() {
                 </div>
 
                 <div className="infoItem">
-                  <div className="infoIcon">✉️</div>
+                  <div className="infoIcon">
+                    <img className="infoIcon__img" src={emailIcon} alt="" aria-hidden="true" />
+                  </div>
                   <div>
                     <p className="infoLabel">Email</p>
                     <div className="infoValue">luizf.vieira@deltavengenharia.com.br</div>
@@ -418,7 +420,9 @@ export default function App() {
                 </div>
 
                 <div className="infoItem">
-                  <div className="infoIcon">☎️</div>
+                  <div className="infoIcon">
+                    <img className="infoIcon__img" src={phoneIcon} alt="" aria-hidden="true" />
+                  </div>
                   <div>
                     <p className="infoLabel">Telefone</p>
                     <div className="infoValue">15 3228 5696</div>
@@ -426,7 +430,9 @@ export default function App() {
                 </div>
 
                 <div className="infoItem">
-                  <div className="infoIcon">💬</div>
+                  <div className="infoIcon">
+                    <img className="infoIcon__img" src={whatsappIcon} alt="" aria-hidden="true" />
+                  </div>
                   <div>
                     <p className="infoLabel">WhatsApp</p>
                     <div className="infoValue">15 99147 8419</div>

@@ -647,14 +647,21 @@
   background: #f8fafc;
   padding: 26px;
   border-right: 1px solid var(--border);
+
+  display: flex;              
+  flex-direction: column;     
 }
 
 /* infos */
-.infoList {
+.infoList{
   margin-top: 18px;
-  display: grid;
-  gap: 14px;
+  flex: 1;                    /* ocupa o "resto" da coluna */
+  display: flex;              /* troca grid por flex */
+  flex-direction: column;
+  justify-content: space-evenly; /* espaçamento igual entre os itens */
+  gap: 0;                     /* remove o gap fixo */
 }
+
 
 .infoItem {
   display: grid;
@@ -672,6 +679,11 @@
   place-items: center;
   color: #fff;
   font-weight: 900;
+}
+.infoIcon__img{
+  width: 20px;
+  height: 20px;
+  display: block;
 }
 
 .infoLabel {
@@ -867,49 +879,80 @@
 }
 
 
-/* ===== Services (cards com imagem + expansão) ===== */
+/* ===== Services (cards com "duas faces" e hover slide) ===== */
 .servicesGrid{
   display: grid;
   gap: 16px;
   grid-template-columns: repeat(3, minmax(0, 1fr));
 }
-
 @media (max-width: 900px){
   .servicesGrid{ grid-template-columns: 1fr; }
 }
 
+/* Card base */
 .serviceCard{
-  background: var(--surface);
-  border: 1px solid var(--border);
+  position: relative;
   border-radius: 22px;
   overflow: hidden;
+  background: var(--surface);
+  border: 1px solid var(--border);
   box-shadow: 0 1px 0 rgba(17,24,39,.02);
   transition: transform .2s ease, box-shadow .2s ease;
 }
-
 .serviceCard:hover{
   transform: translateY(-2px);
   box-shadow: var(--shadow);
 }
 
-.serviceCard__hit{
-  width: 100%;
-  text-align: left;
-  border: none;
-  padding: 0;
-  background: transparent;
-  cursor: pointer;
-  display: block;
+/* Contorno azul no hover (sem mexer no layout) */
+.serviceCard::after{
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 22px;
+  border: 2px solid rgba(11,95,255,0);
+  pointer-events: none;
+  transition: border-color .2s ease;
+}
+.serviceCard:hover::after{
+  border-color: rgba(11,95,255,.75);
 }
 
-/* imagem em cima */
-.serviceCard__media{
-  position: relative;
-  height: 190px;
-  background: #000;
+/* Viewport garante tamanho fixo */
+.serviceCard__viewport{
+  height: 360px;         /* <<< tamanho fixo do card (ajuste aqui) */
   overflow: hidden;
 }
 
+/* Trilho com duas faces lado a lado */
+.serviceCard__track{
+  height: 100%;
+  width: 200%;
+  display: flex;
+  transition: transform .35s ease;
+  will-change: transform;
+}
+
+/* No hover, desliza da direita pra esquerda */
+.serviceCard:hover .serviceCard__track{
+  transform: translateX(-50%);
+}
+
+/* Cada face ocupa metade do trilho */
+.serviceCard__face{
+  width: 50%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Imagens */
+.serviceCard__media{
+  position: relative;
+  height: 170px;
+  background: #000;
+  overflow: hidden;
+}
 .serviceCard__media img{
   width: 100%;
   height: 100%;
@@ -917,78 +960,128 @@
   display: block;
   filter: contrast(1.05) saturate(1.05);
 }
-
 .serviceCard__mediaFade{
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, rgba(0,0,0,.0), rgba(0,0,0,.12));
+  background: linear-gradient(180deg, rgba(0,0,0,0), rgba(0,0,0,.12));
 }
 
-/* corpo */
+/* Conte?do */
 .serviceCard__body{
   padding: 16px 16px 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex: 1;
 }
-
 .serviceCard__title{
   margin: 0;
   font-size: 18px;
   font-weight: 950;
   color: #111827;
 }
-
 .serviceCard__text{
-  margin-top: 8px;
+  margin: 0;
   color: var(--muted);
   line-height: 1.6;
   font-size: 14px;
 }
+.serviceCard__btn{
+  margin-top: auto;
+  align-self: center;
+  background: transparent;
+  border: none;
+  padding: 0;
+  color: var(--brand);
+  font-weight: 800;
+  font-size: 14px;
+  cursor: pointer;
+}
 
-/* “ver detalhes” */
+/* Hint */
 .serviceCard__hint{
-  margin-top: 12px;
+  margin-top: auto;
   font-weight: 800;
   color: var(--brand);
   display: inline-flex;
   align-items: center;
   gap: 8px;
 }
-
 .serviceCard__caret{
   font-size: 14px;
   line-height: 1;
   transform: translateY(1px);
-  transition: transform .18s ease;
-}
-.serviceCard__caret.isOpen{
-  transform: rotate(180deg);
 }
 
-/* expansão */
-.serviceCard__expand{
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height .25s ease;
-  border-top: 1px solid transparent;
+/* ===== Face de detalhes (estilo mais "premium") ===== */
+.serviceCard__media--details{
+  height: 130px;
+}
+.serviceCard__detailsOverlay{
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(90deg, rgba(11,95,255,.08), rgba(11,95,255,.01)),
+    linear-gradient(180deg, rgba(17,24,39,.06), rgba(17,24,39,.16));
 }
 
-.serviceCard__expand.isOpen{
-  max-height: 220px; /* pode aumentar se seu texto ficar maior */
-  border-top-color: var(--border);
+.serviceCard__body--details{
+  padding-top: 14px;
 }
-
-.serviceCard__expandInner{
-  padding: 14px 16px 16px 16px;
+.serviceCard__tag{
+  display: inline-flex;
+  align-self: flex-start;
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: #0a2a66;
+  background: #eaf2ff;
+  border: 1px solid rgba(11,95,255,.18);
+  border-radius: 999px;
+  padding: 6px 10px;
 }
 
 .serviceCard__long{
   margin: 0;
   color: #4b5563;
   line-height: 1.65;
+  font-size: 14px;
+
+  /* evita estourar o card */
+  line-clamp: 5;              /* padrão (futuro) */
+  display: -webkit-box;
+  -webkit-line-clamp: 5;      /* atual (funciona hoje) */
+  -webkit-box-orient: vertical;
 }
 
 .serviceCard__ctaRow{
-  margin-top: 14px;
+  margin-top: auto;
   display: flex;
+  justify-content: center;
+  align-items: center;
   gap: 10px;
   flex-wrap: wrap;
+}
+
+.serviceCard__backHint{
+  margin-top: 8px;
+  font-size: 12px;
+  color: rgba(17,24,39,.55);
+  font-weight: 700;
+}
+
+/* Mobile: hover n?o existe bem ? opcionalmente deixa sempre "front" */
+@media (max-width: 900px){
+  .serviceCard__viewport{ height: auto; }
+  .serviceCard__track{
+    width: 100%;
+    display: block;
+    transform: none !important;
+  }
+  .serviceCard__face{
+    width: 100%;
+    height: auto;
+  }
+  .serviceCard__face--details{ display: none; } /* simples por enquanto */
 }
