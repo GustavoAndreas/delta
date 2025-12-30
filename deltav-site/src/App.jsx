@@ -1,11 +1,10 @@
 import "./App.css";
-import instrumentosMedidaTesteControle from "./assets/services/instrumentos-medida-teste-controle.jpg";
-import maquinasIndustriais from "./assets/services/maquinas-industriais.jpg";
-import instalacaoIndustrial from "./assets/services/instalacao-industrial.jpg";
-import servicosDeEngenharia from "./assets/services/servicos-de-engenharia.jpg";
-import treinamentoDesenvolvimento from "./assets/services/treinamento-desenvolvimento-profissional.jpg";
+import aboutImage from "./assets/us/us.png";
 import addressIcon from "./assets/icons/address.svg";
+import copyIcon from "./assets/icons/copy.svg";
 import emailIcon from "./assets/icons/email.svg";
+import footerLogo from "./assets/logos/white.png";
+import logoHeader from "./assets/logos/logo-header.png";
 import phoneIcon from "./assets/icons/phone.svg";
 import whatsappIcon from "./assets/icons/whatsapp.svg";
 import { useEffect, useRef, useState } from "react";
@@ -16,6 +15,30 @@ function scrollToId(id) {
   el.scrollIntoView({ behavior: "smooth", block: "start" });
 }
 
+function fallbackCopy(text) {
+  const textarea = document.createElement("textarea");
+  textarea.value = text;
+  textarea.setAttribute("readonly", "");
+  textarea.style.position = "fixed";
+  textarea.style.top = "-1000px";
+  textarea.style.left = "-1000px";
+  document.body.appendChild(textarea);
+  textarea.select();
+  try {
+    document.execCommand("copy");
+  } finally {
+    document.body.removeChild(textarea);
+  }
+}
+
+function copyToClipboard(text) {
+  if (navigator?.clipboard?.writeText) {
+    navigator.clipboard.writeText(text).catch(() => fallbackCopy(text));
+    return;
+  }
+  fallbackCopy(text);
+}
+
 function useClickOutside(ref, onOutside) {
   useEffect(() => {
     function handle(e) {
@@ -24,6 +47,20 @@ function useClickOutside(ref, onOutside) {
     document.addEventListener("mousedown", handle);
     return () => document.removeEventListener("mousedown", handle);
   }, [ref, onOutside]);
+}
+
+function CopyButton({ text, label }) {
+  return (
+    <button
+      className="copyBtn"
+      type="button"
+      onClick={() => copyToClipboard(text)}
+      aria-label={label}
+      title={label}
+    >
+      <img className="copyBtn__icon" src={copyIcon} alt="" aria-hidden="true" />
+    </button>
+  );
 }
 
 function Navbar() {
@@ -43,11 +80,11 @@ function Navbar() {
     <header className="navbar">
       <div className="container navbar__inner">
         <button className="brand" onClick={() => go("inicio")}>
-          <div className="brand__badge">ΔV</div>
+          <img className="brand__badge" src={logoHeader} alt="Delta V Engenharia" />
           <div>
             <div className="brand__title">Delta V Engenharia</div>
             <div className="brand__subtitle">
-              Instrumentação • Instalação • Engenharia
+              Projetos • Manutenção • Consultoria Técnica
             </div>
           </div>
         </button>
@@ -66,37 +103,29 @@ function Navbar() {
   className="nav__btn nav__btn--dropdown"
   onClick={() => setOpen((v) => !v)}
 >
-  <span>Serviços</span>
+  <span>Servi&#231;os</span>
   <span className="nav__caret">▾</span>
 
 </button>
 
             {open && (
-              <div className="dropdown__menu" role="menu">
+                            <div className="dropdown__menu" role="menu">
                 <button
                   className="dropdown__item"
-                  onClick={() => go("servicos-instrumentacao")}
-                >
-                  Instrumentos de medida / teste / controle
-                </button>
+                  onClick={() => go("servicos-projetos")}
+                >Projetos e desenvolvimento eletroeletr&#244;nico</button>
                 <button
                   className="dropdown__item"
-                  onClick={() => go("servicos-maquinas")}
-                >
-                  Máquinas e equipamentos industriais
-                </button>
+                  onClick={() => go("servicos-automacao")}
+                >Automa&#231;&#227;o e instrumenta&#231;&#227;o industrial</button>
                 <button
                   className="dropdown__item"
-                  onClick={() => go("servicos-instalacao")}
-                >
-                  Instalação de máquinas e equipamentos
-                </button>
+                  onClick={() => go("servicos-montagem-manutencao")}
+                >Montagem, instala&#231;&#227;o e manuten&#231;&#227;o industrial</button>
                 <button
                   className="dropdown__item"
-                  onClick={() => go("servicos-engenharia")}
-                >
-                  Serviços de engenharia
-                </button>
+                  onClick={() => go("servicos-consultoria-treinamentos")}
+                >Consultoria t&#233;cnica e treinamentos</button>
               </div>
             )}
           </div>
@@ -140,36 +169,26 @@ function Navbar() {
             </div>
 
             <div className="dropdown">
-              <button className="nav__btn" onClick={() => setOpen((v) => !v)}>
-                Serviços ⌄
-              </button>
+              <button className="nav__btn" onClick={() => setOpen((v) => !v)}>Servi&#231;os &#9662;</button>
 
               {open && (
-                <div className="dropdown__menu" role="menu">
+                                <div className="dropdown__menu" role="menu">
                   <button
                     className="dropdown__item"
-                    onClick={() => go("servicos-instrumentacao")}
-                  >
-                    Instrumentos de medida / teste / controle
-                  </button>
+                    onClick={() => go("servicos-projetos")}
+                  >Projetos e desenvolvimento eletroeletr&#244;nico</button>
                   <button
                     className="dropdown__item"
-                    onClick={() => go("servicos-maquinas")}
-                  >
-                    Máquinas e equipamentos industriais
-                  </button>
+                    onClick={() => go("servicos-automacao")}
+                  >Automa&#231;&#227;o e instrumenta&#231;&#227;o industrial</button>
                   <button
                     className="dropdown__item"
-                    onClick={() => go("servicos-instalacao")}
-                  >
-                    Instalação de máquinas e equipamentos
-                  </button>
+                    onClick={() => go("servicos-montagem-manutencao")}
+                  >Montagem, instala&#231;&#227;o e manuten&#231;&#227;o industrial</button>
                   <button
                     className="dropdown__item"
-                    onClick={() => go("servicos-engenharia")}
-                  >
-                    Serviços de engenharia
-                  </button>
+                    onClick={() => go("servicos-consultoria-treinamentos")}
+                  >Consultoria t&#233;cnica e treinamentos</button>
                 </div>
               )}
             </div>
@@ -193,56 +212,152 @@ function Section({ id, eyebrow, title, subtitle, children }) {
   );
 }
 
+function ClientsCarousel() {
+  const containerRef = useRef(null);
+  const draggingRef = useRef(false);
+  const startXRef = useRef(0);
+  const scrollLeftRef = useRef(0);
+  const autoScrollRef = useRef(0);
+  const [isDragging, setIsDragging] = useState(false);
+
+  const clients = Array.from({ length: 8 }, () => "Nossos clientes");
+  const items = [...clients, ...clients];
+
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+
+    let frameId = 0;
+    let lastTime = performance.now();
+    const speed = 75; // px/s
+    autoScrollRef.current = el.scrollLeft;
+
+    function tick(now) {
+      const delta = now - lastTime;
+      lastTime = now;
+
+      if (!draggingRef.current) {
+        autoScrollRef.current += (speed * delta) / 1000;
+        const half = el.scrollWidth / 2;
+        if (half > 0 && autoScrollRef.current >= half) {
+          autoScrollRef.current -= half;
+        }
+        el.scrollLeft = autoScrollRef.current;
+      } else {
+        autoScrollRef.current = el.scrollLeft;
+      }
+
+      frameId = requestAnimationFrame(tick);
+    }
+
+    frameId = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(frameId);
+  }, []);
+
+  function handlePointerDown(e) {
+    const el = containerRef.current;
+    if (!el) return;
+    draggingRef.current = true;
+    setIsDragging(true);
+    el.setPointerCapture(e.pointerId);
+    startXRef.current = e.clientX;
+    scrollLeftRef.current = el.scrollLeft;
+    autoScrollRef.current = el.scrollLeft;
+  }
+
+  function handlePointerMove(e) {
+    if (!draggingRef.current) return;
+    const el = containerRef.current;
+    if (!el) return;
+
+    const delta = e.clientX - startXRef.current;
+    el.scrollLeft = scrollLeftRef.current - delta;
+    autoScrollRef.current = el.scrollLeft;
+
+    const half = el.scrollWidth / 2;
+    if (half > 0) {
+      if (el.scrollLeft < 0) {
+        el.scrollLeft += half;
+        scrollLeftRef.current += half;
+        autoScrollRef.current = el.scrollLeft;
+      } else if (el.scrollLeft >= half) {
+        el.scrollLeft -= half;
+        scrollLeftRef.current -= half;
+        autoScrollRef.current = el.scrollLeft;
+      }
+    }
+  }
+
+  function handlePointerUp(e) {
+    const el = containerRef.current;
+    if (!draggingRef.current) return;
+    draggingRef.current = false;
+    setIsDragging(false);
+    if (el) el.releasePointerCapture(e.pointerId);
+  }
+
+  return (
+    <div
+      className={`clientsCarousel${isDragging ? " is-dragging" : ""}`}
+      ref={containerRef}
+      onPointerDown={handlePointerDown}
+      onPointerMove={handlePointerMove}
+      onPointerUp={handlePointerUp}
+      onPointerCancel={handlePointerUp}
+      aria-label="Carrossel de clientes"
+    >
+      <div className="clientsCarousel__track" role="list">
+        {items.map((label, index) => (
+          <div className="clientsCarousel__item" role="listitem" key={`${label}-${index}`}>
+            {label}
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 export default function App() {
   const services = [
     {
-      id: "servicos-instrumentacao",
-      title: "Instrumentos de medida, teste e controle",
+      id: "servicos-projetos",
+      title: "Projetos e desenvolvimento eletroeletrônico",
       short:
-        "Manutenção e reparo de instrumentos de medição industrial, com foco em precisão e continuidade do processo.",
+        "Desenvolvimento de soluções e projetos eletroeletrônicos sob medida, com foco em confiabilidade e desempenho industrial.",
       long:
-        "Atuação técnica em instrumentos de medida, teste e controle, incluindo diagnóstico, manutenção corretiva e preventiva, verificação de confiabilidade e suporte para manter o processo produtivo estável e seguro.",
-      image: instrumentosMedidaTesteControle,
+        "Projetamos e desenvolvemos soluções eletroeletrônicas sob medida, com análise técnica, especificação de componentes e adequações em sistemas existentes, priorizando confiabilidade, segurança e viabilidade de implementação.",
+      image: "/images/projetos-eletroeletronicos.jpg",
       cta: "Solicitar orçamento",
     },
     {
-      id: "servicos-maquinas",
-      title: "Máquinas e equipamentos industriais",
+      id: "servicos-automacao",
+      title: "Automação e instrumentação industrial",
       short:
-        "Identificação de falhas, reparo e recuperação da capacidade operacional de máquinas industriais.",
+        "Medição, teste, controle e integração de sistemas para otimizar processos e aumentar a estabilidade operacional.",
       long:
-        "Manutenção e reparo de máquinas e equipamentos industriais com foco em redução de paradas, identificação de causa raiz e restauração de performance. Suporte técnico para garantir operação contínua e previsível.",
-      image: maquinasIndustriais,
-      cta: "Solicitar orçamento",
+        "Atuamos em automação e instrumentação industrial para controle e monitoramento de processos. Aplicamos soluções de medição, teste e controle, com foco em rastreabilidade, continuidade operacional e ganhos de eficiência. Integração e adequações conforme o seu cenário.",
+      image: "/images/automacao-instrumentacao.jpg",
+      cta: "Falar com a equipe",
     },
     {
-      id: "servicos-instalacao",
-      title: "Instalação de máquinas e equipamentos",
+      id: "servicos-montagem-manutencao",
+      title: "Montagem, instalação e manutenção industrial",
       short:
-        "Apoio técnico em instalação, adequações e acompanhamento de comissionamento.",
+        "Instalação e manutenção de máquinas e equipamentos industriais, com diagnóstico de falhas e recuperação da capacidade operacional.",
       long:
-        "Apoio especializado na instalação de máquinas e equipamentos industriais, adequações de infraestrutura, orientação técnica e acompanhamento de comissionamento para garantir que o sistema entre em operação corretamente.",
-      image: instalacaoIndustrial,
-      cta: "Solicitar orçamento",
+        "Realizamos montagem, instalação e manutenção corretiva/preventiva em máquinas e equipamentos industriais. Atuamos na identificação de falhas, recuperação de desempenho e suporte técnico em campo, com atendimento ágil e alinhamento de escopo para reduzir paradas e riscos.",
+      image: "/images/montagem-manutencao.jpg",
+      cta: "Chamar no WhatsApp",
     },
     {
-      id: "servicos-engenharia",
-      title: "Serviços de engenharia",
+      id: "servicos-consultoria-treinamentos",
+      title: "Consultoria técnica e treinamentos",
       short:
-        "Consultoria e suporte técnico com análise, documentação e acompanhamento conforme escopo.",
+        "Consultoria e capacitação de equipes técnicas e lideranças, promovendo autonomia, segurança e eficiência.",
       long:
-        "Serviços de engenharia sob demanda: análise técnica, suporte a decisões, documentação, acompanhamento e alinhamento de escopo com foco em confiabilidade, segurança e eficiência operacional.",
-      image: servicosDeEngenharia,
-      cta: "Solicitar orçamento",
-    },    {
-      id: "servicos-treinamento",
-      title: "Treinamento em desenvolvimento profissional e gerencial",
-      short:
-        "Cursos e treinamentos para equipes técnicas e lideranças, com foco em desenvolvimento profissional e gerencial.",
-      long:
-        "Programas sob medida para equipes operacionais e gestão, com conteúdo aplicado à rotina industrial, boas práticas, segurança e melhoria contínua.",
-      image: treinamentoDesenvolvimento,
-      cta: "Solicitar orçamento",
+        "Oferecemos consultoria técnica e treinamentos para equipes e lideranças, com foco em aplicação prática. Ajudamos na tomada de decisão, padronização, orientação técnica e desenvolvimento profissional, elevando a qualidade do atendimento e a eficiência operacional.",
+      image: "/images/consultoria-treinamentos.jpg",
+      cta: "Solicitar contato",
     },
   ];
 
@@ -258,22 +373,16 @@ export default function App() {
           </video>
         </div>
 
-        {/* Overlay azul */}
-        <div className="heroVideo__overlay" />
 
         {/* Conteúdo */}
         <div className="heroVideo__content">
-          <div className="heroVideo__kicker">Sorocaba / SP • Desde 2016</div>
+          <div className="heroVideo__kicker">Sorocaba-SP • Desde 2016</div>
 
-          <h1 className="heroVideo__title">
-            Engenharia aplicada à
-            <br />
-            instrumentação industrial
-          </h1>
+          <h1 className="heroVideo__title">Engenharia aplicada para a indústria de Sorocaba e região</h1>
 
           <p className="heroVideo__text">
-            Manutenção, reparo e instalação de instrumentos de medida, teste e controle, com foco
-            em confiabilidade e continuidade operacional.
+            Desde 2016, a Delta V Engenharia desenvolve soluções em automação industrial, eletrônica e
+            manutenção, com foco em eficiência operacional.
           </p>
 
           <div className="heroVideo__actions">
@@ -294,24 +403,24 @@ export default function App() {
         title="Engenharia aplicada com foco em confiabilidade"
         subtitle="Delta V Engenharia Ltda — Sorocaba-SP."
       >
-        <div className="grid grid--3">
-          <div className="card">
-            <h3 className="card__title">Atividade principal</h3>
-            <p className="card__text">
-              Manutenção e reparação de aparelhos e instrumentos de medida, teste e controle.
-            </p>
-          </div>
-          <div className="card">
-            <h3 className="card__title">Atuações complementares</h3>
-            <p className="card__text">
-              Instalação de máquinas e equipamentos industriais e serviços de engenharia.
-            </p>
-          </div>
-          <div className="card">
-            <h3 className="card__title">Localização</h3>
-            <p className="card__text">
-              Rua Maria Carmen Rodrigues Saker, 90 — Jardim do Paço, Sorocaba — SP.
-            </p>
+        <div className="aboutLayout">
+          <div className="aboutSplit">
+            <div className="aboutImage">
+              <img src={aboutImage} alt="Equipe da Delta V Engenharia" loading="lazy" />
+            </div>
+            <div className="aboutText">
+              <p className="aboutLead">
+                Fundada em 2016, a <strong>Delta V Engenharia</strong> surgiu da necessidade das empresas da
+                região de Sorocaba em inovar nas áreas de <strong>Automação Industrial</strong> e
+                <strong> Eletrônica</strong>, atuando em diversos segmentos ao longo de sua trajetória.
+              </p>
+              <p className="aboutBody">
+                Suas principais atividades incluem desenvolvimento de projetos de produtos eletroeletrônicos,
+                montagem e manutenção de equipamentos industriais, consultoria técnica e treinamentos. Com foco
+                em sempre atender de maneira <strong>ágil</strong> e <strong>eficiente</strong> às expectativas
+                dos seus clientes.
+              </p>
+            </div>
           </div>
         </div>
       </Section>
@@ -320,8 +429,8 @@ export default function App() {
       <Section
         id="servicos"
         eyebrow="O que fazemos"
-        title="Serviços"
-        subtitle="Clique em um serviço para ver mais detalhes e chamar a equipe."
+        title="Soluções em Engenharia Industrial"
+        subtitle="Da concepção do projeto à operação: automação, eletroeletrônica, manutenção e capacitação técnica com foco em confiabilidade."
       >
         <div className="servicesGrid">
           {services.map((s) => (
@@ -357,7 +466,7 @@ export default function App() {
 
                       <div className="serviceCard__ctaRow">
                         <button className="btn btn--primary" onClick={() => scrollToId("contato")}>
-                          Solicitar orçamento
+                          {s.cta}
                         </button>
                       </div>
 
@@ -367,6 +476,47 @@ export default function App() {
               </div>
             </article>
           ))}
+        </div>
+      </Section>
+
+      {/* CLIENTES */}
+      <Section
+        id="clientes"
+        eyebrow="Relacionamento"
+        title="Nossos clientes"
+        subtitle="Parcerias que confiam na nossa entrega."
+      >
+        <ClientsCarousel />
+      </Section>
+
+                  {/* MISSÃO, VISÃO E VALORES */}
+      <Section
+        id="mvv"
+        eyebrow="Nossa essência"
+        title="Missão, visão e valores"
+        subtitle="O que guia nossa atuação no dia a dia."
+      >
+        <div className="grid grid--3">
+          <div className="card">
+            <h3 className="card__title">Missão</h3>
+            <p className="card__text">
+              Entregar soluções em instrumentação, automação e engenharia com segurança, precisão e
+              confiabilidade, garantindo a continuidade e a estabilidade das operações dos nossos clientes.
+            </p>
+          </div>
+          <div className="card">
+            <h3 className="card__title">Visão</h3>
+            <p className="card__text">
+              Ser referência regional em automação, manutenção e instalação industrial, reconhecida pela
+              qualidade técnica e por parcerias de longo prazo.
+            </p>
+          </div>
+          <div className="card">
+            <h3 className="card__title">Valores</h3>
+            <p className="card__text">
+              Segurança, ética e transparência, foco no cliente e melhoria contínua em cada entrega.
+            </p>
+          </div>
         </div>
       </Section>
 
@@ -385,26 +535,26 @@ export default function App() {
           <div className="contactCard__box contactCard__box--map">
             {/* ESQUERDA: infos */}
             <aside className="contactLeft">
-              <div className="contactBrand">
-                <div className="contactBrand__badge">ΔV</div>
-                <div>
-                  <div className="contactBrand__title">Delta V Engenharia</div>
-                  <div className="contactBrand__sub">
-                    Instrumentação • Instalação • Engenharia
-                  </div>
-                </div>
-              </div>
+              <div className="contactPrompt">Entre em contato</div>
 
               <div className="infoList">
                 <div className="infoItem">
                   <div className="infoIcon">
                     <img className="infoIcon__img" src={addressIcon} alt="" aria-hidden="true" />
                   </div>
-                  <div>
-                    <p className="infoLabel">Endereço</p>
+                  <div className="infoContent">
+                    <div className="infoHeader">
+                      <p className="infoLabel">
+                      Endereço
+                      </p>
+                      <CopyButton
+                    text="Rua Maria Carmen Rodrigues Saker, 90 - Jardim do Paço, Sorocaba-SP"
+                    label="Copiar endereço"
+                  />
+                    </div>
                     <div className="infoValue">
-                      Rua Maria Carmen Rodrigues Saker, 90<br />
-                      Jardim do Paço — Sorocaba/SP
+                    Rua Maria Carmen Rodrigues Saker, 90<br />
+                    Jardim do Paço — Sorocaba-SP
                     </div>
                   </div>
                 </div>
@@ -413,9 +563,16 @@ export default function App() {
                   <div className="infoIcon">
                     <img className="infoIcon__img" src={emailIcon} alt="" aria-hidden="true" />
                   </div>
-                  <div>
-                    <p className="infoLabel">Email</p>
-                    <div className="infoValue">luizf.vieira@deltavengenharia.com.br</div>
+                  <div className="infoContent">
+                    <div className="infoHeader">
+                      <p className="infoLabel">
+                      Email
+                      </p>
+                      <CopyButton text="luizf.vieira@deltavengenharia.com.br" label="Copiar email" />
+                    </div>
+                    <div className="infoValue">
+                    luizf.vieira@deltavengenharia.com.br
+                    </div>
                   </div>
                 </div>
 
@@ -423,9 +580,16 @@ export default function App() {
                   <div className="infoIcon">
                     <img className="infoIcon__img" src={phoneIcon} alt="" aria-hidden="true" />
                   </div>
-                  <div>
-                    <p className="infoLabel">Telefone</p>
-                    <div className="infoValue">15 3228 5696</div>
+                  <div className="infoContent">
+                    <div className="infoHeader">
+                      <p className="infoLabel">
+                      Telefone
+                      </p>
+                      <CopyButton text="15 3228 5696" label="Copiar telefone" />
+                    </div>
+                    <div className="infoValue">
+                    15 3228 5696
+                    </div>
                   </div>
                 </div>
 
@@ -433,9 +597,16 @@ export default function App() {
                   <div className="infoIcon">
                     <img className="infoIcon__img" src={whatsappIcon} alt="" aria-hidden="true" />
                   </div>
-                  <div>
-                    <p className="infoLabel">WhatsApp</p>
-                    <div className="infoValue">15 99147 8419</div>
+                  <div className="infoContent">
+                    <div className="infoHeader">
+                      <p className="infoLabel">
+                      WhatsApp
+                      </p>
+                      <CopyButton text="15 99147 8419" label="Copiar WhatsApp" />
+                    </div>
+                    <div className="infoValue">
+                    15 99147 8419
+                    </div>
                   </div>
                 </div>
               </div>
@@ -448,7 +619,7 @@ export default function App() {
                 className="contactMap__frame"
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
-                src="https://www.google.com/maps?q=Rua%20Maria%20Carmen%20Rodrigues%20Saker%2090%20Sorocaba%20SP&output=embed"
+                src="https://www.google.com/maps?q=Rua%20Maria%20Carmen%20Rodrigues%20Saker%2090%20Sorocaba-SP&output=embed"
               />
             </div>
           </div>
@@ -460,8 +631,7 @@ export default function App() {
             <div>
               <h4>Delta V Engenharia</h4>
               <p>
-                Manutenção e reparo de instrumentos de medida, teste e controle. Instalação de máquinas
-                e serviços de engenharia.
+                Desde 2016, a Delta V Engenharia atua no desenvolvimento de soluções em automação industrial e eletrônica, oferecendo projetos, manutenção, consultoria técnica e treinamentos com foco em eficiência operacional.
               </p>
             </div>
 
@@ -482,25 +652,8 @@ export default function App() {
               </div>
             </div>
 
-            <div>
-              <h4>Atendimento</h4>
-              <p>WhatsApp, telefone e email para suporte técnico e orçamentos.</p>
-              <div style={{ marginTop: 10, display: "flex", gap: 10, flexWrap: "wrap" }}>
-                <a
-                  className="btn btn--primary"
-                  href="https://wa.me/5515991478419"
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  WhatsApp
-                </a>
-                <a className="btn" href="tel:+551532285696">
-                  Ligar
-                </a>
-                <a className="btn" href="mailto:luizf.vieira@deltavengenharia.com.br">
-                  Email
-                </a>
-              </div>
+            <div className="footerLogoCol">
+              <img className="footerLogo" src={footerLogo} alt="Delta V Engenharia" />
             </div>
           </div>
 
