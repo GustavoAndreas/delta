@@ -81,7 +81,7 @@ function CopyButton({ text, label }) {
 }
 
 function Navbar() {
-  const [open, setOpen] = useState(false); // dropdown serviços
+  const [open, setOpen] = useState(false); // dropdown servicos
   const [mobileOpen, setMobileOpen] = useState(false); // menu mobile
   const dropdownRef = useRef(null);
 
@@ -101,7 +101,7 @@ function Navbar() {
           <div>
             <div className="brand__title">Delta V Engenharia</div>
             <div className="brand__subtitle">
-              Projetos • Manutenção • Consultoria Técnica
+              Projetos &#8226; Manuten&#231;&#227;o &#8226; Consultoria T&#233;cnica
             </div>
           </div>
         </button>
@@ -109,7 +109,7 @@ function Navbar() {
         {/* Desktop nav */}
         <nav className="nav nav--desktop">
           <button className="nav__btn" onClick={() => go("inicio")}>
-            Início
+            In&#237;cio
           </button>
           <button className="nav__btn" onClick={() => go("sobre")}>
             Sobre
@@ -117,13 +117,12 @@ function Navbar() {
 
           <div className="dropdown" ref={dropdownRef}>
             <button
-  className="nav__btn nav__btn--dropdown"
-  onClick={() => setOpen((v) => !v)}
->
-  <span>Servi&#231;os</span>
-  <span className="nav__caret">▾</span>
-
-</button>
+              className="nav__btn nav__btn--dropdown"
+              onClick={() => setOpen((v) => !v)}
+            >
+              <span>Servi&#231;os</span>
+              <span className="nav__caret">&#9662;</span>
+            </button>
 
             {open && (
                             <div className="dropdown__menu" role="menu">
@@ -147,11 +146,18 @@ function Navbar() {
             )}
           </div>
 
+          <button className="nav__btn" onClick={() => go("clientes")}>
+            Clientes
+          </button>
+          <button className="nav__btn" onClick={() => go("mvv")}>
+            Miss&#227;o
+          </button>
+
           <button className="nav__btn" onClick={() => go("contato")}>
             Contato
           </button>
           <button className="nav__btn nav__cta" onClick={() => go("contato")}>
-            Orçamento
+            Or&#231;amento
           </button>
         </nav>
 
@@ -162,7 +168,7 @@ function Navbar() {
           aria-expanded={mobileOpen}
           aria-label="Abrir menu"
         >
-          ☰ Menu
+          &#9776; Menu
         </button>
       </div>
 
@@ -172,43 +178,51 @@ function Navbar() {
           <div className="container nav--mobile">
             <div className="nav__row">
               <button className="nav__btn" onClick={() => go("inicio")}>
-                Início
+                In&#237;cio
               </button>
               <button className="nav__btn" onClick={() => go("sobre")}>
                 Sobre
+              </button>
+              <div className="dropdown">
+                <button className="nav__btn" onClick={() => setOpen((v) => !v)}>
+                  Servi&#231;os &#9662;
+                </button>
+
+                {open && (
+                  <div className="dropdown__menu" role="menu">
+                    <button
+                      className="dropdown__item"
+                      onClick={() => go("servicos-projetos")}
+                    >Projetos e desenvolvimento eletroeletr&#244;nico</button>
+                    <button
+                      className="dropdown__item"
+                      onClick={() => go("servicos-automacao")}
+                    >Automa&#231;&#227;o e instrumenta&#231;&#227;o industrial</button>
+                    <button
+                      className="dropdown__item"
+                      onClick={() => go("servicos-montagem-manutencao")}
+                    >Montagem, instala&#231;&#227;o e manuten&#231;&#227;o industrial</button>
+                    <button
+                      className="dropdown__item"
+                      onClick={() => go("servicos-consultoria-treinamentos")}
+                    >Consultoria t&#233;cnica e treinamentos</button>
+                  </div>
+                )}
+              </div>
+              <button className="nav__btn" onClick={() => go("clientes")}>
+                Clientes
+              </button>
+              <button className="nav__btn" onClick={() => go("mvv")}>
+                Miss&#227;o
               </button>
               <button className="nav__btn" onClick={() => go("contato")}>
                 Contato
               </button>
               <button className="nav__btn nav__cta" onClick={() => go("contato")}>
-                Orçamento
+                Or&#231;amento
               </button>
             </div>
 
-            <div className="dropdown">
-              <button className="nav__btn" onClick={() => setOpen((v) => !v)}>Servi&#231;os &#9662;</button>
-
-              {open && (
-                                <div className="dropdown__menu" role="menu">
-                  <button
-                    className="dropdown__item"
-                    onClick={() => go("servicos-projetos")}
-                  >Projetos e desenvolvimento eletroeletr&#244;nico</button>
-                  <button
-                    className="dropdown__item"
-                    onClick={() => go("servicos-automacao")}
-                  >Automa&#231;&#227;o e instrumenta&#231;&#227;o industrial</button>
-                  <button
-                    className="dropdown__item"
-                    onClick={() => go("servicos-montagem-manutencao")}
-                  >Montagem, instala&#231;&#227;o e manuten&#231;&#227;o industrial</button>
-                  <button
-                    className="dropdown__item"
-                    onClick={() => go("servicos-consultoria-treinamentos")}
-                  >Consultoria t&#233;cnica e treinamentos</button>
-                </div>
-              )}
-            </div>
           </div>
         </div>
       )}
@@ -543,7 +557,7 @@ export default function App() {
           <div className="endBlock__heroInner">
             <h2 className="endBlock__heroTitle">Fale com a Delta V</h2>
             <p className="endBlock__heroSubtitle">
-              Orçamentos e atendimento técnico para instrumentação, instalação e serviços de engenharia.
+              Or&#231;amentos e atendimento técnico para instrumentação, instalação e serviços de engenharia.
             </p>
           </div>
         </div>
@@ -664,7 +678,7 @@ export default function App() {
             <div>
               <h4>Suporte</h4>
               <div className="footerLinks">
-                <a href="#contato">Orçamento</a>
+                <a href="#contato">Or&#231;amento</a>
                 <a href="#contato">Atendimento</a>
               </div>
             </div>
