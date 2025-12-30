@@ -817,6 +817,7 @@
   place-items: center;
   cursor: pointer;
   align-self: center;
+  position: relative;
   transition: transform .2s ease;
 }
 .copyBtn:hover{
@@ -831,6 +832,28 @@
   width: 18px;
   height: 18px;
   display: block;
+}
+
+.copyToast{
+  position: absolute;
+  left: 100%;
+  top: 50%;
+  transform: translate(-6px, -50%);
+  opacity: 0;
+  pointer-events: none;
+  background: #0b5fff;
+  color: #ffffff;
+  font-size: 11px;
+  font-weight: 800;
+  padding: 4px 8px;
+  border-radius: 999px;
+  white-space: nowrap;
+  box-shadow: 0 8px 18px rgba(11,95,255,.25);
+  transition: opacity .2s ease, transform .2s ease;
+}
+.copyToast.is-visible{
+  opacity: 1;
+  transform: translate(6px, -50%);
 }
 
 .infoIcon {

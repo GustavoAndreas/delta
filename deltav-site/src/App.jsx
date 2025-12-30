@@ -50,15 +50,32 @@ function useClickOutside(ref, onOutside) {
 }
 
 function CopyButton({ text, label }) {
+  const [copied, setCopied] = useState(false);
+  const timeoutRef = useRef(null);
+
+  useEffect(() => {
+    return () => {
+      if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    };
+  }, []);
+
+  function handleCopy() {
+    copyToClipboard(text);
+    setCopied(true);
+    if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    timeoutRef.current = setTimeout(() => setCopied(false), 1400);
+  }
+
   return (
     <button
       className="copyBtn"
       type="button"
-      onClick={() => copyToClipboard(text)}
+      onClick={handleCopy}
       aria-label={label}
       title={label}
     >
       <img className="copyBtn__icon" src={copyIcon} alt="" aria-hidden="true" />
+      <span className={`copyToast${copied ? " is-visible" : ""}`}>Copiado</span>
     </button>
   );
 }
