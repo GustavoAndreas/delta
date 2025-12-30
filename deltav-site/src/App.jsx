@@ -327,7 +327,7 @@ export default function App() {
       long:
         "Projetamos e desenvolvemos soluções eletroeletrônicas sob medida, com análise técnica, especificação de componentes e adequações em sistemas existentes, priorizando confiabilidade, segurança e viabilidade de implementação.",
       image: "/images/projetos-eletroeletronicos.jpg",
-      cta: "Solicitar orçamento",
+      cta: "Falar com a equipe",
     },
     {
       id: "servicos-automacao",
@@ -347,7 +347,7 @@ export default function App() {
       long:
         "Realizamos montagem, instalação e manutenção corretiva/preventiva em máquinas e equipamentos industriais. Atuamos na identificação de falhas, recuperação de desempenho e suporte técnico em campo, com atendimento ágil e alinhamento de escopo para reduzir paradas e riscos.",
       image: "/images/montagem-manutencao.jpg",
-      cta: "Chamar no WhatsApp",
+      cta: "Falar com a equipe",
     },
     {
       id: "servicos-consultoria-treinamentos",
@@ -357,7 +357,7 @@ export default function App() {
       long:
         "Oferecemos consultoria técnica e treinamentos para equipes e lideranças, com foco em aplicação prática. Ajudamos na tomada de decisão, padronização, orientação técnica e desenvolvimento profissional, elevando a qualidade do atendimento e a eficiência operacional.",
       image: "/images/consultoria-treinamentos.jpg",
-      cta: "Solicitar contato",
+      cta: "Falar com a equipe",
     },
   ];
 
