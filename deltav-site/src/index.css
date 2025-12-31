@@ -8,5 +8,12 @@ body {
   background: #f3f4f6;
 }
 
+/* Remove mobile tap highlight */
+a,
+button,
+.serviceCard{
+  -webkit-tap-highlight-color: transparent;
+}
+
 a { color: inherit; text-decoration: none; }
 button { font-family: inherit; }

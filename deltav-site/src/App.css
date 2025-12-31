@@ -500,16 +500,57 @@
 /* ===== Responsive Navbar (hamburguer) ===== */
 .nav__toggle{
   display: none;
-  border: 1px solid var(--border);
-  background: var(--surface);
-  padding: 10px 12px;
-  border-radius: 12px;
+  border: none;
+  background: transparent;
+  padding: 6px;
+  border-radius: 999px;
   font-weight: 900;
+  color: #0a2a66;
   cursor: pointer;
+  width: 38px;
+  height: 38px;
+  align-items: center;
+  justify-content: center;
 }
 
 .nav--desktop{ display: flex; }
 .nav--mobile{ display: none; }
+
+.nav__toggleIcon{
+  position: relative;
+  width: 22px;
+  height: 2px;
+  background: currentColor;
+  border-radius: 999px;
+  transition: background .2s ease;
+}
+
+.nav__toggleIcon::before,
+.nav__toggleIcon::after{
+  content: "";
+  position: absolute;
+  left: 0;
+  width: 22px;
+  height: 2px;
+  background: currentColor;
+  border-radius: 999px;
+  transition: transform .25s ease, top .25s ease;
+}
+
+.nav__toggleIcon::before{ top: -7px; }
+.nav__toggleIcon::after{ top: 7px; }
+
+.nav__toggle.is-open .nav__toggleIcon{
+  background: transparent;
+}
+.nav__toggle.is-open .nav__toggleIcon::before{
+  top: 0;
+  transform: rotate(45deg);
+}
+.nav__toggle.is-open .nav__toggleIcon::after{
+  top: 0;
+  transform: rotate(-45deg);
+}
 
 /* ===== Services: melhor responsividade ===== */
 .service__image{
@@ -535,17 +576,20 @@
 @media (max-width: 760px){
   .nav--desktop{ display: none; }
   .nav__toggle{ display: inline-flex; align-items: center; gap: 8px; }
+  .navbar__inner{ padding: 12px 8px; }
 
   .nav--mobile{
     display: grid;
     gap: 10px;
     padding: 12px 0 16px 0;
+    align-items: center;
   }
 
   .nav__row{
     display: flex;
     gap: 8px;
     flex-wrap: wrap;
+    justify-content: center;
   }
 
   .mobilePanel{
@@ -558,6 +602,15 @@
     position: static; /* dropdown vira bloco no mobile */
     width: 100%;
     margin-top: 10px;
+    text-align: center;
+  }
+
+  .dropdown{
+    align-self: center;
+  }
+
+  .dropdown__item{
+    text-align: center;
   }
 }
 
@@ -698,6 +751,32 @@
   max-width: 680px;
   line-height: 1.7;
   color: #e5e7eb;
+}
+
+.heroVideo__kicker,
+.heroVideo__title,
+.heroVideo__text{
+  opacity: 0;
+  animation: heroTextRise .85s ease forwards;
+}
+
+.heroVideo__kicker{ animation-delay: .1s; }
+.heroVideo__title{ animation-delay: .2s; }
+.heroVideo__text{ animation-delay: .3s; }
+
+@keyframes heroTextRise{
+  from{ opacity: 0; transform: translateY(18px); }
+  to{ opacity: 1; transform: translateY(0); }
+}
+
+@media (prefers-reduced-motion: reduce){
+  .heroVideo__kicker,
+  .heroVideo__title,
+  .heroVideo__text{
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
 }
 
 .heroVideo__actions{
@@ -1281,8 +1360,14 @@
   font-weight: 700;
 }
 
-/* Mobile: hover n?o existe bem ? opcionalmente deixa sempre "front" */
+/* Mobile/tablet: expand on tap */
 @media (max-width: 900px){
+  .serviceCard{
+    cursor: pointer;
+  }
+  .serviceCard__btn{
+    display: none;
+  }
   .serviceCard__viewport{ height: auto; }
   .serviceCard__track{
     width: 100%;
@@ -1293,5 +1378,30 @@
     width: 100%;
     height: auto;
   }
-  .serviceCard__face--details{ display: none; } /* simples por enquanto */
+  .serviceCard__face--details{
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    pointer-events: none;
+    transform: translateY(-6px);
+    transition: max-height .65s ease, opacity .35s ease, transform .5s ease;
+  }
+  .serviceCard.is-expanded .serviceCard__face--details{
+    max-height: 900px;
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
+  }
+  .serviceCard.is-expanded .serviceCard__text{
+    display: none;
+  }
+  .serviceCard__face--details .serviceCard__media{
+    display: none;
+  }
+  .serviceCard__face--details .serviceCard__title{
+    display: none;
+  }
+  .serviceCard__face--details .serviceCard__body{
+    padding-top: 0;
+  }
 }

@@ -163,12 +163,12 @@ function Navbar() {
 
         {/* Mobile toggle */}
         <button
-          className="nav__toggle"
+          className={`nav__toggle${mobileOpen ? " is-open" : ""}`}
           onClick={() => setMobileOpen((v) => !v)}
           aria-expanded={mobileOpen}
-          aria-label="Abrir menu"
+          aria-label={mobileOpen ? "Fechar menu" : "Abrir menu"}
         >
-          &#9776; Menu
+          <span className="nav__toggleIcon" aria-hidden="true" />
         </button>
       </div>
 
@@ -349,6 +349,12 @@ function ClientsCarousel() {
 }
 
 export default function App() {
+  const [expandedServiceId, setExpandedServiceId] = useState(null);
+
+  function handleServiceExpand(id) {
+    setExpandedServiceId((prev) => (prev === id ? prev : id));
+  }
+
   const services = [
     {
       id: "servicos-projetos",
@@ -465,7 +471,12 @@ export default function App() {
       >
         <div className="servicesGrid">
           {services.map((s) => (
-            <article key={s.id} id={s.id} className="serviceCard">
+            <article
+              key={s.id}
+              id={s.id}
+              className={`serviceCard${expandedServiceId === s.id ? " is-expanded" : ""}`}
+              onClick={() => handleServiceExpand(s.id)}
+            >
               <div className="serviceCard__viewport">
                 <div className="serviceCard__track">
                   {/* FACE 1 (normal) */}
@@ -496,7 +507,13 @@ export default function App() {
                       <p className="serviceCard__long">{s.long}</p>
 
                       <div className="serviceCard__ctaRow">
-                        <button className="btn btn--primary" onClick={() => scrollToId("contato")}>
+                        <button
+                          className="btn btn--primary"
+                          onClick={(event) => {
+                            event.stopPropagation();
+                            scrollToId("contato");
+                          }}
+                        >
                           {s.cta}
                         </button>
                       </div>
@@ -671,6 +688,8 @@ export default function App() {
               <div className="footerLinks">
                 <a href="#sobre">Sobre</a>
                 <a href="#servicos">Serviços</a>
+                <a href="#clientes">Clientes</a>
+                <a href="#mvv">Missão</a>
                 <a href="#contato">Contato</a>
               </div>
             </div>
