@@ -621,10 +621,14 @@
   position: relative;
   width: 100vw;
   height: clamp(640px, 80vh, 820px); /* altura controlada */
-  background: #071b3d; /* fallback */
+  background-color: #071b3d; /* fallback */
   display: flex;
   align-items: center;
   isolation: isolate;
+  overflow: hidden;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  will-change: transform;
 }
 
 /* Vídeo em si */
@@ -632,31 +636,37 @@
   position: absolute;
   inset: 0;
   z-index: 0;
-}
-
-.heroVideo__media video{
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center;
+  overflow: hidden;
+  contain: paint;
   transform: translateZ(0);
   backface-visibility: hidden;
   will-change: transform;
 }
 
-.heroVideo::before{
+.heroVideo__media::after{
   content: "";
   position: absolute;
   inset: 0;
   z-index: 1;
   pointer-events: none;
-  background-color: rgba(7,27,61,.72);
-  background-image: linear-gradient(90deg, rgba(7,27,61,.70), rgba(7,27,61,.30));
+  background: linear-gradient(90deg, rgba(7,27,61,.85), rgba(7,27,61,.35));
   transform: translateZ(0);
   backface-visibility: hidden;
-  will-change: transform;
 }
 
+.heroVideo__media video{
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  filter: brightness(.7) saturate(1.05);
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  will-change: transform, filter;
+}
 
 /* Conteúdo por cima */
 .heroVideo__content{
