@@ -417,12 +417,12 @@ export default function App() {
 
         {/* Conteúdo */}
         <div className="heroVideo__content">
-          <div className="heroVideo__kicker">Sorocaba-SP • Desde 2016</div>
+          <div className="heroVideo__kicker">Sorocaba-SP</div>
 
           <h1 className="heroVideo__title">Engenharia aplicada para a indústria de Sorocaba e região</h1>
 
           <p className="heroVideo__text">
-            Desde 2016, a Delta V Engenharia desenvolve soluções em automação industrial, eletrônica e
+            A Delta V Engenharia desenvolve soluções em automação industrial, eletrônica e
             manutenção, com foco em eficiência operacional.
           </p>
 
@@ -451,7 +451,7 @@ export default function App() {
             </div>
             <div className="aboutText">
               <p className="aboutLead">
-                Fundada em 2016, a <strong>Delta V Engenharia</strong> surgiu da necessidade das empresas da
+                A <strong>Delta V Engenharia</strong> surgiu da necessidade das empresas da
                 região de Sorocaba em inovar nas áreas de <strong>Automação Industrial</strong> e
                 <strong> Eletrônica</strong>, atuando em diversos segmentos ao longo de sua trajetória.
               </p>
@@ -683,7 +683,7 @@ export default function App() {
             <div>
               <h4>Delta V Engenharia</h4>
               <p>
-                Desde 2016, a Delta V Engenharia atua no desenvolvimento de soluções em automação industrial e eletrônica, oferecendo projetos, manutenção, consultoria técnica e treinamentos com foco em eficiência operacional.
+                A Delta V Engenharia atua no desenvolvimento de soluções em automação industrial e eletrônica, oferecendo projetos, manutenção, consultoria técnica e treinamentos com foco em eficiência operacional.
               </p>
             </div>
 
