@@ -600,8 +600,11 @@
 
   .dropdown__menu{
     position: static; /* dropdown vira bloco no mobile */
-    width: 100%;
-    margin-top: 10px;
+    width: calc(100% - 24px);
+    max-width: 520px;
+    margin: 6px auto 10px auto;
+    padding: 6px 8px;
+    box-sizing: border-box;
     text-align: center;
   }
 
@@ -1106,12 +1109,23 @@
   }
   .footerMega__inner{
     grid-template-columns: 1fr 1fr;
+    column-gap: 32px;
+  }
+  .footerMega__inner > div:first-child{
+    grid-column: 1 / -1;
+  }
+  .footerLogoCol{
+    grid-column: 1 / -1;
+    justify-content: center;
+    align-items: center;
+    margin-top: 6px;
   }
 }
 
 @media (max-width: 560px){
   .footerMega__inner{
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 24px;
   }
 }
 
@@ -1165,7 +1179,7 @@
 .nav__btn--dropdown{
   display: inline-flex;
   align-items: center;   /* 🔥 alinha perfeitamente */
-  gap: 0px;
+  gap: 6px;
 }
 
 .nav__caret{

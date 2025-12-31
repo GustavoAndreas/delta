@@ -88,13 +88,13 @@ function Navbar() {
   useClickOutside(dropdownRef, () => setOpen(false));
 
   function go(id) {
-    scrollToId(id);
     setOpen(false);
     setMobileOpen(false);
+    setTimeout(() => scrollToId(id), 0);
   }
 
   return (
-    <header className="navbar">
+    <header className="navbar" ref={dropdownRef}>
       <div className="container navbar__inner">
         <button className="brand" onClick={() => go("inicio")}>
           <img className="brand__badge" src={logoHeader} alt="Delta V Engenharia" />
@@ -115,7 +115,7 @@ function Navbar() {
             Sobre
           </button>
 
-          <div className="dropdown" ref={dropdownRef}>
+          <div className="dropdown">
             <button
               className="nav__btn nav__btn--dropdown"
               onClick={() => setOpen((v) => !v)}
@@ -176,39 +176,43 @@ function Navbar() {
       {mobileOpen && (
         <div className="mobilePanel">
           <div className="container nav--mobile">
-            <div className="nav__row">
+            <div className="nav__row nav__row--top">
               <button className="nav__btn" onClick={() => go("inicio")}>
                 In&#237;cio
               </button>
               <button className="nav__btn" onClick={() => go("sobre")}>
                 Sobre
               </button>
-              <div className="dropdown">
-                <button className="nav__btn" onClick={() => setOpen((v) => !v)}>
-                  Servi&#231;os &#9662;
-                </button>
+              <button
+                className="nav__btn nav__btn--dropdown"
+                onClick={() => setOpen((v) => !v)}
+              >
+                Servi&#231;os <span className="nav__caret">&#9662;</span>
+              </button>
+            </div>
 
-                {open && (
-                  <div className="dropdown__menu" role="menu">
-                    <button
-                      className="dropdown__item"
-                      onClick={() => go("servicos-projetos")}
-                    >Projetos e desenvolvimento eletroeletr&#244;nico</button>
-                    <button
-                      className="dropdown__item"
-                      onClick={() => go("servicos-automacao")}
-                    >Automa&#231;&#227;o e instrumenta&#231;&#227;o industrial</button>
-                    <button
-                      className="dropdown__item"
-                      onClick={() => go("servicos-montagem-manutencao")}
-                    >Montagem, instala&#231;&#227;o e manuten&#231;&#227;o industrial</button>
-                    <button
-                      className="dropdown__item"
-                      onClick={() => go("servicos-consultoria-treinamentos")}
-                    >Consultoria t&#233;cnica e treinamentos</button>
-                  </div>
-                )}
+            {open && (
+              <div className="dropdown__menu" role="menu">
+                <button
+                  className="dropdown__item"
+                  onClick={() => go("servicos-projetos")}
+                >Projetos e desenvolvimento eletroeletr&#244;nico</button>
+                <button
+                  className="dropdown__item"
+                  onClick={() => go("servicos-automacao")}
+                >Automa&#231;&#227;o e instrumenta&#231;&#227;o industrial</button>
+                <button
+                  className="dropdown__item"
+                  onClick={() => go("servicos-montagem-manutencao")}
+                >Montagem, instala&#231;&#227;o e manuten&#231;&#227;o industrial</button>
+                <button
+                  className="dropdown__item"
+                  onClick={() => go("servicos-consultoria-treinamentos")}
+                >Consultoria t&#233;cnica e treinamentos</button>
               </div>
+            )}
+
+            <div className="nav__row nav__row--bottom">
               <button className="nav__btn" onClick={() => go("clientes")}>
                 Clientes
               </button>
