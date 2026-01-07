@@ -531,7 +531,8 @@ export default function App() {
         </div>
       </Section>
 
-      {/* CLIENTES */}
+      {/* CLIENTES (parceiros) - temporariamente oculto */}
+      {/*
       <Section
         id="clientes"
         eyebrow="Relacionamento"
@@ -540,6 +541,7 @@ export default function App() {
       >
         <ClientsCarousel />
       </Section>
+      */}
 
                   {/* MISSÃO, VISÃO E VALORES */}
       <Section
